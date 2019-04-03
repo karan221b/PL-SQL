@@ -1,2 +1,1 @@
-# prime-numbers
-pl sql
+All the programs from SEM-3
