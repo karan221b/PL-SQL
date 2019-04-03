@@ -1,0 +1,16 @@
+declare
+ c_name account.cname%type;
+ c_price account.cprice%type;
+ c_id  account.cid%type;
+ gst number:=0;
+
+
+begin
+ select cname,cprice into c_name,c_price from account  where cid=&c_id;
+ if (c_price>20)then
+	dbms_output.put_line('hello');
+ 	gst:=c_price+100;
+ 	c_price:=c_price+gst;
+ 	update account set cprice=c_price where cid=&c_id;
+ end if;
+ end;

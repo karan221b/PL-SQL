@@ -1,0 +1,37 @@
+Make and write the answers  for the following question bank.I hope you understand the need.
+-----------------------
+1.State what is transaction? explain any transaction operation
+2. Write the states of ATM transaction example
+3. Elaborate on the states of transaction
+4.What are Transaction Properties?  Elaborate on same
+5. What do you mean by ACID? what does each property say wrt trasaction execution?
+6.what is a serial schedule? elaborate with an example
+7. What is a serializable schedule? what's difference between the Serial and Serializable schedule?
+8.what is the role of locks in serilizability?
+9. Define Transaction, Schedule. Explain both with differences.
+10. what are SQL commands to manage transaction? state and explain
+11. how do two transactions conflict? explain scenario
+12.write on lost update problem by giving an example.
+13. Write a short note on locks. which all types of locks can be used in SQL? how?
+14. how to implement concurrency control in a transaction?
+15. Explain types of locks which are explained in SQL.
+16. what do you mean by deadlock in transaction?
+17. how to offer highest degree of concurrency?
+18. what are the ways by which the serial equivalent order on conflicts is ensured?
+19.  what is 2PC? what is the need of it?
+20. explain the phases of 2PC
+21. elaborate on  - Two phase locking guarantees serializability
+22. Elaborate on -In an optimistic approach, each transaction moves thru two or three phases.
+23. State and explain the phases of optimistic transaction.
+24. Comment on - The recovery manager is responsible for ensuring two imp.properties: Atomicity and durability
+25. State why Atomicity and durability play an important role in the recovery manager.
+26. Define log. what are the contents of log record.
+27. What is ARIES? explain its phases
+28. what is the need of recovery process?write on four imp.concepts that affect the recovery process.
+29. Define log and its attributes
+30. what actions are taken for recording logs?
+31. Write a short note on CLR(compensation log record)
+32. Elaborate on impotant recovery related structure
+33. What are the three phases by which system is recovered from crash?
+34. Write a short note on checkpointing.
+35. Define and explain WAL

@@ -1,0 +1,34 @@
+create or replace procedure r_header(m_id in number) is
+	morigin varchar2(20);
+	mdestination varchar(20);
+	mdistance number;
+begin
+	select origin,destination,distance into morigin,mdestination,mdistance from route_header where route_id=m_id;
+	dbms_output.put_line(morigin);
+	dbms_output.put_line(mdestination);
+	dbms_output.put_line(mdistance);
+	if( morigin='thane' and mdestination='madurai' ) then
+		update route_header set distance=400 where route_id=m_id;
+		dbms_output.put_line('change in distance');
+	elsif( morigin='madras' and mdestination='madurai' ) then
+		update route_header set distance=350 where route_id=m_id;
+		dbms_output.put_line('change in distance');
+	else
+		dbms_output.put_line('no change in distance');
+	end if;
+exception
+	when no_data_found then
+		dbms_output.put_line('no such data');
+end;
+.
+/
+
+
+
+declare
+	id number:=&id;
+begin
+	r_header(id);
+end;
+.
+/

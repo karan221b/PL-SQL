@@ -1,0 +1,19 @@
+declare 
+a_name accounts.acc_hd_name%type;
+o_date accounts.acc_op_dt%type;
+bal accounts.balance%type;
+date_diff number;
+
+begin
+select acc_hd_name,acc_op_dt,balance into a_name,o_date,bal from accounts where acc_id=&acc_id;
+date_diff:=sysdate-o_date;
+dbms_output.put_line(date_diff);
+if date_diff>365 then
+dbms_output.put_line('You havent used your account since a year');
+else 
+dbms_output.put_line('you do have used account on daily basis');
+end if;
+end;
+.
+/
+

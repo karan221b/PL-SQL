@@ -1,0 +1,202 @@
+1.Write a pl/sql block to accept a number from the user ,check whether it is +ve or -ve. If +ve, then verify whether it is even or odd. If -ve then display its -ve, else display it is zero
+2.Calculate simple interest using procedure (P, N ,R to be passed from the procedure to the pl/sql block)and show o/p using both methods
+-----------------------------------------------------------------------------------------------------
+
+create or replace procedure proc1 is
+begin
+delete  from job where eid=1;
+dbms_output.put_line('record deleted');
+commit;
+
+end;
+.
+/
+[ at sql prompt à
+set serveroutput on;
+exec proc1;
+]
+-------------------------------------------------------------
+create or replace procedure proc2 ( a in number, b out number ) is
+
+begin
+select count(*) into b from emp where sal>=a;
+
+end;
+.
+/
+
+[ at sql prompt –
+var b number;
+exec proc2(5000, :b);
+print :b;
+]
+------------------------------------------------------------------------
+
+create or replace procedure
+	get_emp_det (pempno in number,pname out varchar,psal out number) is
+begin
+	select ename,basic/sal into pname,psal from emp where empno=pempno;
+		dbms_output.put_line('Running');
+
+
+exception
+	when no_data_found then
+		dbms_output.put_line('No empno');
+
+		
+end;
+.
+/
+-----------------
+SQL> /
+
+Procedure created.
+
+SQL> var basic number;
+
+SQL> var emp_name varchar;
+Usage: VAR[IABLE] [ <variable> [ NUMBER | CHAR | CHAR (
+                    VARCHAR2 (n [CHAR|BYTE]) | NCHAR |
+                    NVARCHAR2 (n) | CLOB | NCLOB | REFC
+                    BINARY_FLOAT | BINARY_DOUBLE ] ]
+
+SQL> var emp_name varchar(10);
+Usage: VAR[IABLE] [ <variable> [ NUMBER | CHAR | CHAR (
+                    VARCHAR2 (n [CHAR|BYTE]) | NCHAR |
+                    NVARCHAR2 (n) | CLOB | NCLOB | REFC
+                    BINARY_FLOAT | BINARY_DOUBLE ] ]
+
+SQL> var emp_name varchar2(10);
+
+SQL> exec get_emp_det(123,:basic,:emp_name)
+
+PL/SQL procedure successfully completed.
+SQL> set serveroutput on;
+SQL> exec get_emp_det(123,:emp_name,:basic)  //follow the sequence properly given  as per mentioned in ur proc
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from emp_aud;
+
+    PEMPNO PNAME            PSAL
+---------- ---------- ----------
+       123
+       123
+
+SQL> print basic
+
+     BASIC
+----------
+
+
+
+-----------------------------------------------------------------------------
+a.   Create an empty procedure or replace a procedure with Hello World and execute the same.
+b. Write a PL/SQL block to define procedure to insert data in the Employee table
+c.  Write a PL/SQL block to define and call procedure to swap two numbers.
+
+----------------------------------------------------------------
+
+answer a.:-
+create or replace procedure proc is
+begin
+    dbms_output.put_line('Hello world...!!');
+  end ;
+.
+/
+Proc created
+exec proc;
+
+----------------------------------------------------------------------------------------------
+ans b -
+
+create or replace procedure emp3(a in number,b in varchar2)
+as
+begin
+insert into emp values(a,b);
+end;
+.
+/
+declare 
+	p number(3);
+	q varchar2(30);
+	r varchar(10);
+	s number(5);
+begin
+	p:=&a;
+	q:='&b';
+	emp3(p,q);
+	
+end;
+/
+
+
+-----------------------------------
+answer c:-
+
+create or replace procedure swapno ( num1 in out number,num2 in out number) as
+begin 
+	num1:=num1+num2;
+	num2:=num1-num2;
+	num1:=num1-num2;
+end;
+.
+/
+
+set serveroutput on
+declare
+	a number:=&a;
+	b number:=&b;
+begin
+	dbms_output.put_line('num1='||a);
+	dbms_output.put_line('num2='||b);
+	dbms_output.put_line('swaping');
+	swapno(a,b);
+	dbms_output.put_line('num1='||a);
+	dbms_output.put_line('num2='||b);
+end;
+.
+/
+-----------------------------------------------------------------------------------------------------
+
+Write a procedure to accept route_id as i/p and update capacity to be 25  if cat_code is 1, & 50 if cat_code is 2. Use route_header table as follows.
+Route_id	cat_code	origin		destination	fare	capacity
+    101		    1		Pune		Mumbai	300	     50
+    102		    2		Mumbai	Delhi		1000	    100
+    103		   3		Mumbai	Surat		500	    150
+    104		   4		Cochin	Banglore	700	     75	
+Solution 7:
+SQL> create or replace procedure p_route(a in number)
+  2  as
+  3  b number(2);
+  4  c number(4);
+  5  begin
+  6  select cat_code, capacity into b,c from route_header where Route_id=a;
+  7  if b=1 then
+  8  update route_header set capacity=25 where Route_id=a;
+  9  elsif b=2 then
+ 10  update route_header set capacity=50 where Route_id=a;
+ 11  end if;
+ 12  exception when NO_DATA_FOUND then
+ 13  dbms_output.put_line('Enter valid route id');
+ 14  end;
+ 15  /
+
+Method 1:
+SQL> declare
+  2  Route_id number(3);
+  3  cat_code number(2);
+  4  origin varchar(25);
+  5  destination varchar(30);
+  6  fare number(7,2);
+  7  capacity number(4);
+  8  begin
+  9  Route_id:=&route_id;
+ 10  p_route(route_id);
+ 11  end;
+ 12  /
+
+Method 2:
+SQL> execute p_route(101);
+
+PL/SQL procedure successfully completed.

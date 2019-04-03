@@ -1,0 +1,27 @@
+create or replace function evod(num in number)
+return varchar2 is
+begin
+	if(num=0) then
+		dbms_output.put_line('no is zero');
+ 		return 'zero';
+	elsif(num<0) then
+		raise_application_error(-20003,'negative number');
+	else
+		if(mod(num,2)=0) then
+			return 'even';
+		else 
+			return 'odd';
+		end if;
+	end if;
+end;
+.
+/
+
+
+declare 
+no number:=&no;
+begin
+insert into nos values(no,evod(no));
+end;
+.
+/

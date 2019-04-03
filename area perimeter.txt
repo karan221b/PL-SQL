@@ -1,0 +1,13 @@
+declare 
+length number:=&length;
+breadth number:=&breadth;
+area number;
+perimeter number;
+begin
+
+area := length*breadth;
+perimeter := 2*(length+breadth);
+dbms_output.put_line('the value of area and perimeter ' ||area||' : '||perimeter);
+end;
+.
+/

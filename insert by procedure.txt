@@ -1,0 +1,18 @@
+CREATE OR REPLACE procedure pro_details(pro_name in varchar2,pro_quntity in number)
+as
+begin
+
+insert into pro(pro_name,pro_quntity) values (pro_name,pro_quntity);
+dbms_output.put_line('done');
+end;
+.
+/
+declare
+	
+	pro_name:=&pro_name;
+	pro_quntity:=&pro_quntity;
+begin
+	pro_details(pro_name,pro_quntity);
+end;
+.
+/

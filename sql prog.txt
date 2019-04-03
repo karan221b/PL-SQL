@@ -1,0 +1,75 @@
+declare
+begin
+	dbms_output.put_line('hello world');
+end;
+.
+/
+
+declare 
+	a number:= 10;
+	b number:= &b;
+	c number;
+begin
+	c:=a+b;
+	dbms_output.put_line('value of c '||c);
+end;
+.
+/
+
+declare 
+	a number:=3.14;
+	b number:=&b;
+	c number;
+begin
+	c:= a*b*b;
+	dbms_output.put_line('are is '|| c);
+end;
+.
+/
+
+declare 
+	a number:=&a;
+	b number:=&b;
+	c number;
+begin
+	c:=a;
+	a:=b;
+	b:=c;
+	dbms_output.put_line('swapped numbers are '||a ||b);
+end;
+.
+/
+
+declare
+	a number:=&a;
+	b number:=&b;
+	c number:=&c;
+	d number:=&d;
+	e number:=&e;
+	sums number;
+	average number;
+begin
+	sums:=a+b+c+d+e;
+	dbms_output.put_line('sum is '||sums);
+	average:=sums/5;
+	dbms_output.put_line('average is '||average);
+end;
+.
+/
+
+declare 
+	p number:=&p;
+	n number:=&n;
+	r number:=&r;
+	si number;
+begin
+	si:=p*n*r/100;
+	dbms_output.put_line('simple interest '||si);
+end;
+.
+/
+
+
+declare 
+	r number;
+	n varchar;

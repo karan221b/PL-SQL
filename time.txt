@@ -1,0 +1,16 @@
+﻿create or replace trigger tri4
+before insert or update or delete on products for each row
+declare
+	t1 number;
+	day1 varchar2(10);
+begin
+	t1:=to_char(sysdate,'hr24');
+	day1:=to_char(sysdate,'dy');
+	if(day1='fri') then
+		if t1 between 13 and 23 then
+			raise_application_error(-20000,'plz try again');
+		end if;
+	end if;
+end;
+.
+/

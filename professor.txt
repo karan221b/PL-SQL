@@ -1,0 +1,23 @@
+﻿create or replace procedure display(id1 in number,dep in varchar2)is
+total_pro number;
+p_name varchar2(20);
+p_subject varchar2(20);
+begin
+	select count(*)into total_pro from professor where deptname=dep;
+	dbms_output.put_line('total no of professors in'||dep||'are'||total_pro);
+	select name,subject into p_name,p_subject from professor where id=id1;
+	dbms_output.put_line('selected professor details:');
+	dbms_output.put_line('id:'||id1||' name'||p_name||' subject'||p_subject);
+end;
+.
+/
+
+
+declare
+id number:=&id;
+dept varchar2(20):='&dept';
+begin
+display(id,dept);
+end;
+.
+/

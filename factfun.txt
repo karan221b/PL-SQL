@@ -1,0 +1,21 @@
+create or replace function fact(num in out number) 
+return number is
+f number:=1;
+begin
+	while(num>0)
+	loop
+		f:=num*f;
+		num:=num-1;
+	end loop;
+	return f;
+end;
+.
+/
+
+declare
+	a number:=&a;
+begin
+	dbms_output.put_line(fact(a));
+end;
+.
+/

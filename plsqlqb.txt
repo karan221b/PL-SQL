@@ -1,0 +1,47 @@
+Squences :-
+1) write down the significance of trigger with sequence
+2) what do you mean by cycle / no cycle in sequence? explain it with an example. can we create a sequence for -ve nos? for yes/no--justify
+3) write a short note on sequnces
+4) write the meaning of following parameters along with ex.:- a) maxvalue b) cycle c) cache and nocache
+5) what are currval and nextval when discussed in sequences? what is the need of dual here?
+6) Discuss the syntax when the sequence is to be used with dual and a table
+7) how to alter/drop a sequence , explain with an example
+8) what is the need and use  of trigger? How to create/execute and drop it?
+9)  what do you mean by after/before on any table in trigger?
+10) State the types of triggers. What do you mean by audit trail?
+11) what is the difference in PK value given for an attribute and the Primary Key generation using trigger?
+
+
+ PL/SQL... 
+
+1) explain pl/sql basic data types
+2) what is the relation of using set serveroutput on/off with dbms_output.put_line? how to display more than one value by using the same stmt?
+3) what is the purpose of trigger? why does oracle recommend trigger?
+4) how is if then...elsif...else stmt is different case stmt(to be taught yet)
+5) what are the cursor attributes? list all and explain any2
+6) discuss why cursor %ISOPEN and CLOSE not used in implicit cursors?
+7) what is the diff. in implicit and explicit cursor? explain syntax too
+8) what is a stored procedure? and why is it particularly useful?
+9) write down the use of loop.. end loop ? where and how is it used? give an example
+10) what is the use of cursor for loop?
+11) what is the diff and similarities in cursor for and for loop?
+12) what are parameterized cursors? explain syntax with an example
+13) waht is role of null values in sql and pl/sql? how such values are handled?
+14) explain different types along with boolean and its example
+15) what is exit stmt? is it used in cursors too? for what?
+16) explain goto stmt in pl/sql
+17) write a note on table within table. how is it created?
+18) explain the concept of cursor
+19) how the cursor gets executed? is it different from execution process of pl/sql block
+20) how does the err. handling done in pl/sql?
+21) what is an exception? explain diff. types
+22) why and how to use the user defined exceptions? explain with an ex
+23) what is the meaning of pragma? what is the pragma exception?
+24) can we use 2-3 user defined exceptions? how?
+25) is it possible to use usedefined and system defined exception to gether ? how?
+26) what is update.....no wait?
+27) what is parameterized cursor? is it an advantage to use this than normal cursor?
+28) wHAT HAPPens with fetch stmt in cursor?
+29) what is the difference in procedure and functions?
+30) What are stored procedures and functions? how to exec them? How to call them from pl/sql block? How to exec them on the SQL prompt?
+31) how to drop and replace a  procedure and/or function? Write down a syntax of it

@@ -1,0 +1,51 @@
+create or replace function fun1( a in number ) return number is
+b number;
+begin
+select count(*) into b from emp where sal>=a;
+return b;
+end;
+.
+/
+---
+[at sql promptà
+exec :a := fun1(9000);
+print :a;]
+-------------------------------------------
+
+Triggers
+
+Primary key generation
+
+create sequence stud_seq1 start with 1 increment by 1;
+
+
+create table stud(rolno number(3),name varchar(10),mks number(3));
+
+desc stud(rolno, name, mks)
+ 
+insert into stud(name,mks) values('m',67);
+---------------------
+create or replace trigger t2
+    before insert on stud for each row
+declare
+    mpkeyval number(3);
+
+begin
+    select stud_seq1.nextval into mpkeyval from dual;
+    :new.rolno:=mpkeyval;
+end;
+.
+/
+
+--------------
+
+insert into stud(name,mks) values('m',67);
+
+You can see rolno is auto-generated...
+
+----------------------------
+
+1. write a trigger to auto-generate the product_no in products(prodno, prodname, p_price) as p01, p02, p03...
+
+2. Rewrite  pl/sql block of trigger , where instead of "after", write "before"
+and change there the bind variable from ":new" to ":old", learn and understand the error

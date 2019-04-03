@@ -1,0 +1,91 @@
+
+Triggers
+-------------------------------------------------------------------'
+Primary key gen.
+
+create sequence stud_seq1 start with 1 increment by 1;
+
+create table stud(rolno number(3),name varchar(10),mks number(3));
+
+insert into stud(name,mks) values('kkk',90);
+insert into stud(name,mks) values('m',67);
+---------------------
+create or replace trigger t2
+	before insert on stud for each row
+declare
+	mpkeyval number(3);
+
+begin
+	select stud_seq1.nextval into mpkeyval from dual;
+	:new.rolno:=mpkeyval;
+end;
+.
+/
+----------------------------------
+Date/time restriction
+--------------------------
+set serveroutput on
+
+create or replace trigger suntrig
+after insert or update 
+on s_stud
+
+declare
+
+	d1 char(2);
+begin
+	
+d1:=to_char(sysdate,'hh');
+	dbms_output.put_line(d1);
+	if d1 in ('10') then
+	raise_application_error(-20002,'try on any other time');
+	end if;		
+
+end;
+.
+/
+
+
+Audit-Trail operation
+----------------------------------
+
+create or replace trigger audit_trail after
+	update or delete on emp for each row
+declare
+	oprn varchar2(8);
+	deptno number(2);
+	dname varchar2(14);
+	
+begin
+	if updating then
+		oprn:='update';
+	end if;
+
+	if deleting then
+		oprn:='delete';
+	end if;
+
+	deptno:=:old.deptno;
+	dname:=:old.dname;
+	
+insert into newdept values(deptno,dname,oprn,sysdate);
+
+end;
+.
+/
+
+Primary key generation
+---------------------------------------------------------------
+
+create or replace trigger emptrig
+	before insert on emp for each row
+declare
+	eno  number;
+
+begin
+	select empseq.nextval into eno from dual;
+	:new.enum:=eno;
+end;
+.
+/
+

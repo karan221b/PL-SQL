@@ -1,0 +1,35 @@
+#When we want year using 12:-
+declare
+	m_md date:=to_date('2015/10/12','yyyy/mm/dd');
+	m_ed date:=to_date('2017/10/12','yyyy/mm/dd');
+	mon_diff number;
+	yrs_diff number;
+begin
+	
+	select months_between(m_ed,m_md) into mon_diff from dual;
+	dbms_output.put_line('How many Month'||mon_diff);
+	yrs_diff:=mon_diff/12;
+	select round(yrs_diff,2) into yrs_diff from dual;
+	dbms_output.put_line('How many Year'||yrs_diff);
+	
+	
+end;
+.
+/
+ 
+#When we want year using 365:-
+declare
+	m_md date:=to_date('2015/10/12','yyyy/mm/dd');
+	m_ed date:=to_date('2017/10/12','yyyy/mm/dd');
+	Date_diff number;
+	yrs_diff number;
+begin
+	select  (m_ed - m_md) into Date_diff from dual;
+	dbms_output.put_line('How many Days'||Date_diff);
+	yrs_diff:=Date_diff/365;
+	select round(yrs_diff,2) into yrs_diff from dual;
+	dbms_output.put_line('How many Year'||yrs_diff);
+	
+end;
+.
+/

@@ -1,0 +1,21 @@
+set serveroutput on;
+declare
+	staffid staff.staffis%type;
+	staff_name staff.staffname%type;
+	job_type staff.jobtype%type;
+	salary staff.salary%type;
+	hiredate staff.hiredate%type;
+	date_diff number:=0;
+	increase number:=0;
+begin
+
+select staffname,jobtype,salary,hiredate into staff_name,job_type,salary,hiredate from staff where staffis=&staffid;
+date_diff:=months_between(hiredate,to_date(sysdate,'yyyy/mm/dd'));
+if job_type = 'administrative'  and date_diff > 7 then
+increase:=salary+salary;
+dbms_output.put_line('the salary is:'||salary);
+end if;
+update staff set salary = increase where staffis=staffid;
+end;
+.
+/                                                                                                       

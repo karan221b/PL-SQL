@@ -1,0 +1,11 @@
+﻿create sequence seq_orid1 start with 1 increment by 1;
+create or replace trigger keygen
+before insert on order_details for each row
+declare
+or_id number;
+begin
+	select seq_orid1.nextval into or_id from dual;
+	:new.ord_no:=or_id;
+end;
+.
+/

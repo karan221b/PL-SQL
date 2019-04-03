@@ -1,0 +1,26 @@
+declare
+	a varchar(10);
+	b number;
+	c number;
+	total number:=0;
+	average number:=0;
+begin
+	select name,m1,m2 into a,b,c from stud where roll_no=&roll_no;
+	total:=b+c;
+	average:=total/2;
+	if average>90 then
+		dbms_output.put_line('Merit');
+	elsif average>75 and average<90 then
+		dbms_output.put_line('distinction'); 
+	elsif average>75 and average<60 then
+		dbms_output.put_line('first class');
+	elsif average>60 and average<40 then
+		dbms_output.put_line('second class');
+	elsif average>40 then
+		dbms_output.put_line('pass');
+	else 
+		dbms_output.put_line('sorry:( failed');
+	end if;
+end;
+.
+/

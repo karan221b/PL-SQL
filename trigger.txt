@@ -1,0 +1,10 @@
+create or replace trigger t3
+      before insert on stud9 for each row
+declare
+	mpkeyval number(3);
+begin
+	select stud_seq1.nextval into mpkeyval from dual;
+	:new.rolno:=mpkeyval;
+end;
+.
+/

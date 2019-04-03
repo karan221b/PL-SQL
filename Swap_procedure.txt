@@ -1,0 +1,19 @@
+CREATE OR REPLACE procedure sum1(in_num1 in out number,in_num2 in out number,out_temp out number) 
+IS
+BEGIN
+	out_temp:=in_num1;
+	in_num1:=in_num2;
+	in_num2:=out_temp;
+	dbms_output.put_line('the swapped number are'||in_num1||' and '||in_num2);
+END;
+.
+/
+declare
+	temp number;
+	a number:=&a;
+	b number:=&b;
+begin
+	sum1(a,b,temp);
+end;
+.
+/

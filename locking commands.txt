@@ -1,0 +1,141 @@
+
+
+Example of Savepoint
+
+SQL> select * from emp4;
+
+EID                     ENAME                       DEPTNO
+----------------------- ----------------------- ----------
+LNAME                   SAL
+----------------------- ------------------------
+2                       sanjay                           2
+mm
+
+3                       rhea                             2
+mm
+
+4                       Parminder                        3
+
+SQL> savepoint b;
+
+Savepoint created.
+
+SQL> delete from emp4 where deptno=3;
+
+1 row deleted.
+
+SQL> rollback to b;
+
+Rollback complete.
+
+SQL> select * from emp4;
+
+EID                     ENAME                       DEPTNO
+----------------------- ----------------------- ----------
+LNAME                   SAL
+----------------------- ------------------------
+2                       sanjay                           2
+mm
+
+3                       rhea                             2
+mm
+
+4                       Parminder                        3
+
+locking
+
+1)
+on screen 1:-
+SQL> lock table emp in share row exclusive mode nowait;
+
+Table(s) Locked.
+
+on screen 2:-
+SQL>select * from emp;
+
+EMPNO ENAME             SAL DEPARTMENT_ID DESIG           BONUS
+----- ---------- ---------- ------------- ---------- ----------
+    1 xyz             12000               lect             9500
+    2 mihir           65885            45 prof             8500
+   99 DEPT 99
+    4 kkk             17000            50 lect             4500
+
+
+2)
+on screen 1:-
+SQL> Lock table emp in exclusive mode;
+
+Table(s) Locked.
+
+SQL> Lock table emp in share mode;
+
+Table(s) Locked.
+
+on screen 2:-
+SQL> select * from emp;
+
+     EMPNO ENAME             SAL DEPARTMENT_ID DESIG           BONUS
+---------- ---------- ---------- ------------- ---------- ----------
+         1 xyz             12000               lect             9500
+         2 mihir           65885            45 prof             8500
+        99 DEPT 99
+         4 kkk             17000            50 lect             4500
+
+SQL> insert into emp(empno) values(9);
+???? --- infinite loop --- close SQL and restart
+
+on screen 1, if you give commit then the locks are released and the values in emp on screen 2 can be inserted
+
+3)
+on screen 1
+
+SQL> select * from emp where empno=2 for update;
+
+     EMPNO ENAME             SAL DEPARTMENT_ID DESIG           BONUS
+---------- ---------- ---------- ------------- ---------- ----------
+         2 mihir           65885            45 prof             8500
+
+on screen 2:-
+SQL> insert into emp(empno) values(9);
+???? --- infinite loop --- close SQL and restart
+
+This query not only shows the rows that satisfy the query conditions, it also locks the selected rows and prevents other transactions from locking or updating these rows until a COMMIT or a ROLLBACK occurs.
+
+4) if made change in above i.e.3rd stmt
+
+on screen1
+
+
+SQL> select * from emp where empno=2 for update;
+
+     EMPNO ENAME             SAL DEPARTMENT_ID DESIG           BONUS
+---------- ---------- ---------- ------------- ---------- ----------
+         2 mihir           65885            45 prof             8500
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+on screen2
+
+SQL> select * from emp;
+
+     EMPNO ENAME             SAL DEPARTMENT_ID DESIG           BONUS
+---------- ---------- ---------- ------------- ---------- ----------
+         1 xyz             12000               lect             9500
+         2 mihir           65885            45 prof             8500
+        99 DEPT 99
+         4 kkk             17000            50 lect             4500
+
+SQL> insert into emp(empno) values (3);
+
+1 row created.
+
+This is also possible which is given as below:-
+
+SQL> lock table hr.employees, hr.departments 
+2 in exclusive mode; 
+Table(s) Locked.
+
+SQL>

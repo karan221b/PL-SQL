@@ -1,0 +1,21 @@
+create or replace function even_odd(x in number)
+return varchar2 is
+c varchar2(20);
+begin
+	if(mod(x,2)=0) then
+ 		c:='even number';
+	else
+		c:='odd number';
+	end if;
+return c;
+end;
+.
+/
+declare 
+a number:=&a;
+begin
+dbms_output.put_line(even_odd(a));
+end;
+.
+/
+-

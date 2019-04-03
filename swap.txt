@@ -1,0 +1,14 @@
+declare
+a number :=&a;
+b number :=&b;
+c number ;
+
+begin
+dbms_output.put_line('The value of a and b is ' || a || b);
+c :=b;
+b :=a;
+a :=c;
+dbms_output.put_line('The value of c is '  || a || b);
+end;
+.
+/

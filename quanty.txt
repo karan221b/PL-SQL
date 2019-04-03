@@ -1,0 +1,29 @@
+declare
+	bk_prices books.bk_price%type;
+	bkids books.bkid%type;
+	gst number:=0;
+	sale_price number:=0;
+	no_books number:=&no_books;
+
+begin
+	select bk_price,bkid into bk_prices,bkids from books where bkid=&bkids;
+	gst:=bk_prices*(3/100);
+	
+	dbms_output.put_line('Enter quantity of books:'||no_books);
+	if bk_prices >='150' then
+		sale_price:=((bk_prices*(20/100))+gst)*no_books+bk_prices;
+		dbms_output.put_line('The new price is:'||sale_price);
+		update books set total_price=sale_price where bkid=bkids;
+	
+	elsif bk_prices >= '100' then
+		sale_price:=((bk_prices*(10/100))+gst)*no_books+bk_prices;
+		dbms_output.put_line('The new price is:'||sale_price);
+		update books set total_price=sale_price where bkid=bkids;
+	elsif bk_prices >'50' then
+		dbms_output.put_line('the total price is:'||sale_price);
+		dbms_output.put_line('No disount');
+	end if;
+		
+end;
+.
+/

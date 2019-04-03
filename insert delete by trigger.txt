@@ -1,0 +1,20 @@
+﻿create or replace trigger prod_tri
+before insert or delete on products for each row
+declare
+	operation varchar2(10);
+	mid number;
+	mname varchar2(10);
+begin
+	if inserting then
+		operation:='insert';
+		mid:=:new.proid;
+		mname:=:new.prodname;
+	elsif deleting then
+		operation:='delete';
+		mid:=:old.proid;
+		mname:=:old.prodname;
+	end if;
+	insert into newpro values(mid,operation,sysdate,mname);
+end;
+.
+/

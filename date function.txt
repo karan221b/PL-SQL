@@ -1,0 +1,17 @@
+
+declare
+id accounts.acc.id%type;
+date1 accounts.acc_open_dt% type:=acc_open_dt;
+
+begin
+select acc_id into id from accounts where acc_id = &acc_id;	
+select sysdate into a from dual;
+select acc_open_dt into date1 from accounts;
+if date1>a then
+dbms_output.put_line('the holders are'||date1);
+else
+dbms_output.put_line("no reaction");
+end if;
+end;
+.
+/

@@ -1,0 +1,19 @@
+CREATE OR REPLACE procedure sum1(in_num in number,out_mult out number) 
+IS
+BEGIN
+	for ctr in 1..10
+	loop
+			out_mult:=ctr*in_num;
+			dbms_output.put_line(in_num||'*'||ctr||'='||out_mult);
+	end loop;
+END;
+.
+/
+declare
+	temp number;
+	num number:=&num;
+begin
+	sum1(num,temp);
+end;
+.
+/

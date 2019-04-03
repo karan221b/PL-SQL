@@ -1,0 +1,41 @@
+declare 
+bk_id number;
+bk_price number;
+totall number:=0;
+
+
+begin
+select book_id,book_price into bk_id,bk_price from book where book_id=&bk_id;
+
+totall := bk_price*1.03;
+dbms_output.put_line(totall);
+update book set total = totall where book_id = bk_id;
+end;
+.
+/
+
+declare 
+bk_id number;
+price number;
+totall number;
+
+begin
+select book_id, book_price into bk_id,price from book where book_id = &bk_id;
+
+if price>1000 then
+totall := (price*20)/100;
+dbms_output.put_line(totall);
+
+elsif totall>500 then
+totall := (price*10)/100;
+dbms_output.put_line(totall);
+
+else
+totall := (price*5)/100;
+end if;
+dbms_output.put_line(totall);
+
+update book set total= totall where book_id = bk_id;
+end;
+.
+/

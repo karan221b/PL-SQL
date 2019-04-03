@@ -1,0 +1,20 @@
+create or replace function evod(n in number)
+return varchar2 is
+begin
+	if mod(n,2)=0 then
+	return ('even');
+	else
+	return ('odd');
+        end if;
+end;
+.
+/
+declare
+	a number:=&a;
+	
+begin
+	dbms_output.put_line(evod(a));
+	
+end;
+.
+/

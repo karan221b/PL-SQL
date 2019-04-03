@@ -1,0 +1,457 @@
+﻿1) Write a pl/sql block to update the price of the book by its title, if price > 300, update it by 10%,else update its price by 5%.
+Accept the book title from the user, raise an exception if a specific title is not available.
+Use the table book_details(bookid,book_title,price). The records should be inserted in the table after creating it.
+Updated price for specific book title should get stored after the execution of this pl/sql block
+
+create table book_details(bookid number,book_title varchar(20),price number);
+insert into book_details values(1,'C++',500);
+insert into book_details values(2,'Python Programming',1000);
+insert into book_details values(3,'Half Girlfriend',1000);
+insert into book_details values(4,'abc',100);
+
+declare 
+    m_price book_details.price%type;
+    m_book Book_details.book_title%type:='&m_book';
+begin
+    select price into m_price from book_details where book_title=m_book;
+    if (m_price>300) then
+        update book_details set price=((m_price)+((m_price*10)/100)) where book_title=m_book;
+        dbms_output.put_line('10% increment in price');
+    else
+        update book_details set price=((m_price)+((m_price*5)/100)) where book_title=m_book;
+        dbms_output.put_line('5% increment in price');
+    end if;
+exception 
+    when no_data_found then
+        dbms_output.put_line('Book not available');
+end;
+.
+/
+
+select * from book_details;
+
+-------------------------------------------------------------------------------------------------------
+2)(i)Create a table simpl_int(p_amt,no_yrs,rate) Insert the records and 
+     calculate and display the simple interest for all the records  at the execution of pl/sql block.
+  (ii)Add a column Sr_No in the above table; generate and display the values by using sequence
+
+create table simpl_int(sr_no number,p_amt number,no_yrs number,rate number);
+create sequence seq start with 1 increment by 1;
+
+insert into simpl_int values(seq.nextval,3000,7,9.8);
+insert into simpl_int values(seq.nextval,2000,10,7.2);
+insert into simpl_int values(seq.nextval,10000,5,6.1);
+insert into simpl_int values(seq.nextval,7000,9,8);
+
+declare 
+    m_pamt simpl_int.p_amt%type;
+    m_noyrs simpl_int.no_yrs%type;
+    m_rate simpl_int.rate%type;
+    simpl_interest number;
+    no_of_records number;
+begin
+    select count(*) into no_of_records from simpl_int;
+    for i in 1..no_of_records
+    loop
+        select p_amt,no_yrs,rate into m_pamt,m_noyrs,m_rate from simpl_int where sr_no=i;
+        simpl_interest:=(m_pamt*m_noyrs*m_rate)/100;
+        dbms_output.put_line('Simple Interest for id '||i||' is '||simpl_interest);
+    end loop;
+end;
+.
+/
+
+---------------------------------------------------------------------------------------------------------
+3)A clerk in an organization wants to make the entries of the details products in the database.
+  Help him by writing a procedure that will allow him to insert the values in the products database
+  by just executing the procedure. 
+
+create seq_prodid start with 1 increment by 1;
+create table product(id number,prod_nm varchar(20),prod_price number);
+
+create or replace procedure InsertData(prod_nm in varchar2,prod_price in number) is
+begin
+    insert into product values(seq_prodid.nextval,prod_nm,prod_price);
+    dbms_output.put_line('Inserted Successfully');
+end;
+.
+/
+
+//calling procedure using pl/sql block
+declare 
+    prod_name varchar(15):='&prod_name';
+    prod_price number:=&prod_price;
+begin   
+    InsertData(prod_name,prod_price);
+end;
+.
+/
+
+//calling using exec 
+exec InsertData('Nokia 520',10000);
+
+//calling using call
+call InsertData('Nokia 540',13000);
+
+-------------------------------------
+Create a table products(prodid,prodname,price). Insert 2 records into the same table. Save the contents. 
+Delete the records which is recently inserted. 
+Rollback the transaction.
+Save the changes done till this point by the name as T1.		
+
+create table product(prodid number,prodname varchar2(15),price number);
+
+insert into product values(seq_prodid.nextval,'Pixel XL',60000);
+
+insert into product values(seq_prodid.nextval,'One Plus 5',29999);
+
+commit;
+
+delete from product where prodid=seq_prodid.curval;
+
+rollback; 
+
+savepoint T1;
+
+-----------------------------------------------------------------------
+
+MindTree Software Company has decided to place the employees who have done different certifications in
+various areas like Testing, Project Management, DotNet Programming and Red Hat Linux Certifications.
+The company maintains the information about employees in the table called emp_certifications  which
+contains name of the employee(ename), his identification number(eno) , area of certification
+(certification_area) and the department under which the employee is working (deptname).
+Write a PL/SQL block with CASE…WHEN statements with variable, that prints the area of  certification and 
+the department name where employee number and type of certification is to be taken as an input by the user.  		
+
+create sequence seq_empid start with 1 increment by 1;
+create table emp_certifications(eno number,ename varchar(15),certification_area varchar2(30),deptname varchar(30));
+
+insert into emp_certifications values(seq_empid.nextval,'Yogesh','Testing','Developing');
+
+insert into emp_certifications values(seq_empid.nextval,'Pramod','Project Management','Programming and Designing');
+
+insert into emp_certifications values(seq_empid.nextval,'Rahul','DotNet Programming','Programming');
+
+insert into emp_certifications values(seq_empid.nextval,'Sapna','Red hat Linux Certifications','Networking');
+//donno why we have to accept certification_area....?
+
+declare 
+    emp_no number:=&emp_no;
+    cer varchar(30);       
+    dept_name varchar(30);
+begin   
+    select certification_area,deptname into cer,dept_name from emp_certifications where eno=emp_no;
+    case emp_no
+    when 1 then
+        dbms_output.put_line(emp_no||':'||cer||':'||dept_name); 
+    when 2 then
+        dbms_output.put_line(emp_no||':'||cer||':'||dept_name); 
+    when 3 then
+        dbms_output.put_line(emp_no||':'||cer||':'||dept_name); 
+    when 4 then
+        dbms_output.put_line(emp_no||':'||cer||':'||dept_name); 
+    end case;
+end;
+.
+/ 
+
+--------------------------------------------------------------------------------------------------------------
+write a pl/sql block to display the employees whose data is stored in emp(empno,ename,job, hiredate). 
+The employees who are currently giving their services to an organization for more than 15 years;
+If such employees are presently working or have already worked then show their empno, ename,  job
+along with the message “Service given for 15 yrs” else raise an exception and print the message as  
+”15 years not over”
+
+create table emp(empno number,ename varchar(15),job varchar(10), hiredate date);
+
+insert into emp values(1,'Rahul','Programmer','01-jan-2002');
+insert into emp values(2,'Suraj','Designer','01-jan-2010');
+insert into emp values(3,'Pramod SJ','CEO','03-mar-1999');
+
+declare
+    hire_date date;
+    id number:=&id;
+    name varchar2(20);
+    m_job varchar2(20);
+    diff number;
+begin
+    select ename,job,hiredate into name,m_job,hire_date from emp where empno=id;
+    select floor(months_between(sysdate,hire_date)/12) into diff from dual;
+    
+    if(diff>=15) then
+        dbms_output.put_line('Emp id:'||id||' Emp Name:'||name||' Job'||m_job);   
+        dbms_output.put_line('Service years:'||diff);
+        dbms_output.put_line('Service given for 15 yrs');
+    else    
+        dbms_output.put_line('Service years:'||diff);
+        dbms_output.put_line('15 years not over');
+    end if;
+end;
+.
+/
+
+-----------------------------------------------------------------------------------
+
+Write a PL/SQL block to create a procedure to display the details of professor who works in specific department.
+The name of department should be user taken. Use table Professor (id, name, subject, deptname).
+Also count how many professors are there in this department.
+
+create table Professor (id number, name varchar(15), subject varchar(20), deptname varchar(10));
+
+insert into Professor values(1,'XYZ','Maths','Maths');
+
+insert into Professor values(2,'ABC','Python','CS');
+
+insert into Professor values(3,'QWE','C++','CS');
+
+insert into Professor values(4,'MNO','Database Management','CS');
+
+create or replace procedure DisplayProfessor(m_id in number,dep in varchar2) is
+total_professor number;
+m_name varchar(15);
+m_subject varchar2(15);
+begin
+    select count(*) into total_professor from professor where deptname=dep;
+    dbms_output.put_line('Total no of Professor in '||dep||' are '||total_professor);
+    select name,subject into m_name,m_subject from professor where id=m_id;
+    dbms_output.put_line('Selected Professor Details:');
+    dbms_output.put_line('ID:'||m_id||' name '||m_name||' subject '||m_subject);
+end;
+.
+/
+
+calling using plsql block
+
+declare   
+    id number:=&id;
+    dep varchar(10):='&dep';
+begin   
+    display(id,dep);
+end;
+.
+/
+
+calling using exec
+
+exec DisplayProfessor(1,'CS');
+
+------------------------------------------------------------------------------------------
+
+Write a PL/SQL block to display the list of tenders numbers who bid for a certain company.
+Use tables Company (company_id, company_name) and tender (tendor_no, company_id, bid).
+Store ‘Y’ or ‘N’ in bided column when tender is bided.
+
+create table Company(company_id number, company_name varchar(20));
+create table Tender (tendor_no number, company_id number, bid char(1));
+
+insert into Company values(1,'XYZ');
+insert into Company values(2,'PQR');
+
+
+???????????????????????????????????????????????????
+
+
+
+----------------------------------------------------------------------------------------
+Create table route_header (routeid, route_no, cat_code, origin, destination, fare, distance) with five records. 
+Write a PL/SQL block to accept route_id from the user, check whether  if:-
+i)	Its origin is ‘Thane’ and destination is ‘Madurai’, and then change the distance to 400.
+ii)	Its origin is ‘Madras’ and destination is ‘Madurai’, then change the distance to 350.
+Otherwise, block should raise a user-defined exception ‘No change in distance’. Display its details. Also the block should handle exception if routeid is not there in the table.		
+
+create table route_header (routeid number, route_no number, cat_code number, origin varchar(20), destination varchar(20), fare number, distance number);
+
+insert into route_header values(101,1001,1,'Mumbai','Thane',500,200);
+
+insert into route_header values(102,1002,2,'Thane','Madurai',600,300);
+
+insert into route_header values(103,1003,3,'Thane','Colaba',400,200);
+
+insert into route_header values(104,1004,4,'Madras','Madurai',600,300);
+
+insert into route_header values(102,1002,2,'Thane','Pune',400,300);
+
+create or replace procedure r_header(mid in number) is
+    morigin varchar(20);
+    mdestination varchar(20);
+    mdistance number;
+begin
+    select origin,destination,distance into morigin,mdestination,mdistance from route_header where routeid=mid;
+    dbms_output.put_line(morigin);
+    dbms_output.put_line(mdestination);
+    dbms_output.put_line(mdistance);
+    if( morigin='Thane' and mdestination='Madurai' ) then
+        update route_header set distance=400 where routeid=mid;
+        dbms_output.put_line('change in distance');
+    elsif(morigin='Madras' and mdestination='Madurai') then
+        update route_header set distance=350 where routeid=mid;
+        dbms_output.put_line('change in distance');
+    else    
+        dbms_output.put_line('No change in distance');
+    end if;
+exception
+    when no_data_found then 
+        dbms_output.put_line('No Such Data');
+end;
+.
+/
+
+calling using plsql block
+
+declare
+    id number:=&id;
+begin   
+    r_header(id);
+end;
+.
+/
+
+calling using exe
+---------------------------------------------------------------------------------------------
+write  a pl/sql block to execute the primary key generation for order_details(ord_no,ord_date, qty)
+
+create sequence seq_ordid start with 1 increment by 1;
+
+create table order_details(ord_no number,ord_date date, qty number);
+insert into order_details values(null,'23-feb-2017',3);
+insert into order_details values(null,'03-mar-2017',1);
+insert into order_details values(null,'01-Dec-2016',2);
+insert into order_details values(null,'23-sep-2017',4);
+
+create or replace trigger keygen1 
+before insert on order_details for each row
+declare
+ord_id number;
+begin  
+    select seq_ordid.nextval into ord_id from dual;
+    :new.ord_no:=ord_id;
+end;
+.
+/
+
+select * from order_details;
+
+----------------------------------------------------------------------------------------------------------
+
+Write a pl/sql block to display the products(prod_id, prodname,prod_price)
+ if the the new product is added then store its details in newprod(prodid, operation, op_date,prodname) 
+ and if the product is deleted then store the original values of the product in newprod as given above	
+
+create table product(id number, prod_nm varchar(20),prod_price number);
+create table newprod(prodid number, operation varchar(20), op_date date,prodname varchar(20));
+
+
+ create or replace trigger prod_trigger 
+ before insert or delete on product for each row
+ declare
+    operation varchar(20);
+    mid number;
+    mname varchar(20);
+ begin
+    if inserting then
+        operation:='insert';
+        mid:=:new.proid;
+        mname:=:new.prodname;
+    elsif deleting then
+        operation:='delete';
+        mid:=:old.proid;
+        mname:=:old.prodname;
+    end if;
+    insert into newprod values(mid,operation,sysdate,mname);
+end;
+.
+/
+
+insert into product values(1,'Dell 3541',24000);
+insert into product values(2,'Nokia 530',9000);
+update product set prod_price=9999 where id=2;
+
+------------------------------------------------------------------------------------------------------------------------
+
+Write a pl/sql block to control the operation of entering the values on products(prod_id, prodname,prod_price)
+on Thurs between 1 pm to 3pm		
+
+create or replace trigger CheckTime1 
+before insert or update or delete on products for each row
+declare
+    t1 number;
+    day1 varchar(10);
+begin
+    t1:=to_char(sysdate,'hh24');
+    day1:=to_char(sysdate,'dy');
+    if(day1='sun') then
+        if t1 between 1 and 5 then
+            raise_application_error(-20002,'Please try at different time');
+        end if;
+    end if;
+end;
+.
+/
+
+
+insert into product values(1,'Moto G3',130000);
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Write a pl/sql block to control the operation of entering the values on products_ord(ord_id, ord_dt, ord_qty)
+ on Fri between 3 pm to 5pm
+
+create or replace products_ord(ord_id number, ord_dt date, ord_qty number);
+
+create or replace trigger CheckTime2 
+before insert or update or delete on product_ord for each row
+declare
+    t1 number;
+    day1 varchar(10);
+begin
+    t1:=to_char(sysdate,'hh24');
+    day1:=to_char(sysdate,'dy');
+    if(day1='fri') then
+        if t1 between 15 and 17 then
+            raise_application_error(-20000,'Please try at different time');
+        end if;
+    end if;
+end;
+.
+/
+
+
+insert into products_ord values(1,sysdate,3);
+
+--------------------------------------------------------------------------------------------------------
+
+.Write  a pl/sql block to accept the number from the user check whether it is even or odd, 
+if even then store the contents in nos(number, status) for checking just check that the number must be  not be –ve 
+
+create table nos(num number,status varchar(5));
+
+create or replace function check_EO(num in number)
+return varchar2 is
+begin   
+    if(num=0) then
+        dbms_output.put_line('its a whole no');
+        
+        return 'whole';
+    elsif(num<0) then
+        raise_application_error(-20001,'Negative Number');
+    else
+        if(mod(num,2)=0) then
+            return 'even';
+        else
+            return 'odd';
+        end if;
+    end if;
+end;
+.
+/
+
+Function called using pl/sql block
+
+declare 
+    num number:=&num;
+begin
+    insert into nos values(num,check_EO(num));
+end;
+.
+/
+-------------------------------------------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

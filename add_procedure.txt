@@ -1,0 +1,17 @@
+CREATE OR REPLACE procedure sum1(in_a in number,in_b in number,out_c out number) 
+IS
+BEGIN
+	out_c:=in_a+in_b;
+	dbms_output.put_line(out_c);
+END;
+.
+/
+declare
+	o number;
+	a number:=&a;
+	b number:=&b;
+begin	
+	sum1(a,b,o);
+end;
+.
+/

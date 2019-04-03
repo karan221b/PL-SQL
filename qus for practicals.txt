@@ -1,0 +1,151 @@
+1. Write a pl/sql block to update the price of the book by its title, if price > 
+300, update it by 10%,else update its price by 5%.Accept the book title from the user, 
+show error if a specific title is not available. Use the table book_details(bookid,book_title,price). 
+The records should be inserted in the table after creating it. Updated price for specific book title should get stored after
+the execution of this pl/sql block.
+
+2.Create a table simpl_int(p_amt,no_yrs,rate, SI) Insert the records and calculate and display the simple interest in 
+table too for all the records at the execution of pl/sql block.
+
+3. Write a PL/SQL which executes a procedure to update capacity to 25, if cat_code=1, else update capacity to 50,
+if cat_code=2, otherwise display error message “no change in capacity”, if cat_code is other than this. 
+Accept cat_code from user. Use route_header (routeid, cat_code, origin, destination, capacity)
+
+4. Write a PL/SQL block to accept acc_id from the user and use accounts(acc_id, act_payee_nm, acct_opening_dt, balance) ,
+Find the account holders who have not accessed the account from 1 year, show their data.
+
+Modify above problem stmt, accept transaction amount from the user and acc_type. 
+
+if acc_type = 'D' (Debit) then execute the operation accordingly for credit or debit operation accordingly..
+
+if acc_type ='C'(Credit) then execute the operation. If any other type entered , raise an exception , "No such acc_type"
+
+
+Store the records in acc_updt_det(acc_id,acc_type, mod_balance)
+
+--------------------------------------------
+5.Create table staff (staffid, staffname, jobtype, salary, hiredate) with five records:-Write a PL/SQL to accept staffid 
+from the user.
+
+Increase the salary of staff by 10%, if type of job is ”Administrative” and has worked for more than 7 years. Otherwise, 
+increase the salary of staff by 5%, if type of job is “Technical” and has worked for less than 5 years. Or 
+increase the salary of staff by 3%, if type of job is “Exec” and has worked for less than 3 years. Display the details of 
+staff and store updated salary in staffupdt(staffid,updt_sal). 
+
+
+------------------------------------------------------------------------ 
+
+6.Create a table employee_tbl ( emp_id, emp_name, emp_salary, job,hiredate) with five records. 
+Insert the records except emp_id.
+
+Write a PL/SQL to satisfy following conditions, when employee id is user taken.
+
+                                i.            If job is clerk then increase the salary by Rs. 5000.
+
+                              ii.            If job is manager then increase the salary by Rs. 15000.
+
+                            iii.            If job is Sr Manager then increase the salary by Rs. 28000.
+
+
+Otherwise, if job is other than above three categories, then block should raise an exception which should prints message
+'No change in salary'. The block should also raise suitable exception if such employee id does not exist in a table.
+
+7.   Create a table lecturer (lec_id, major_sub, birthdt, gender) with one of the attribute as major subject.
+  Write a PL/SQL block with CASE WHEN statement with variable which print the course name depending upon the major 
+ subject for the specified lecturer id. 
+
+8. Create a table MyTable with attributes num_col and char_col. Write a PL/SQL block to insert values in the table and
+ run NULL as a statement inside one of the IF statement.
+
+9. Write a PL/SQL block to show movie_details running in a theater which has columns(movie_id, screen_id, movie_nm, length)
+ which will show all details of movie where movie_nm will be accepted from the user and the screen_id must be 
+generated using sequence and displayed as an output
+
+10.Write a pl/sql block to accept details of medicine_det(medid, medname, medprod_dt, med_exp_dt). 
+Accept the medid from the user and check whether exp_dt is greater than medprod_dt, find out the difference between 
+the two dates.
+
+11. Write a pl/sql block to find the qty_ordered < stock_in_hand when client places an order with supplier for some product. 
+If this condition fulfills then update supp_ord (ord_id, prodno,  qty_ordered, stock_in_hand, ord_fulfilled) and 
+store the status as ‘y’ for ord_fulfilled otherwise it should be stored as ‘n’ . 
+
+12. Write a procedure to find the sum of two numbers and print it
+
+13. Write a procedure to swap two numbers which have been accepted from the user 
+
+14. Write a procedure to show the multiplication table of any number accepted from the user.
+
+15. write a pl/sql block to accept two timing as reporting_tm and finish_tm from reporting_date and  finish_date respectively.
+ find out tasks have been successfully completed by him/her for the job id which has been accepted from the user between 
+the two timings. use jobs(jobid, reporting_date,finish_date, tasks finished)  
+...................the problem stmt is changed ..............
+
+16.People’s Bank wants to implement a “Farmer of the Year Award” that should be given to the farmer who is the customer
+ of that bank with most number of taking crops in a year. As a reward, he/she gets a deposit of Rs. 5000 to their account.
+Customer table: custId, name, Balance
+Transaction: TransId, custId, TransDate, TransAmount
+Write a PL/SQL procedure that accepts the custId and balance & displays the updated amount in TransAmount which is the
+ reward amount to his account 
+
+17.Write a PL/SQL which executes a procedure to update capacity to 25, if cat_code=1, else update capacity to 50,
+ if cat_code=2, otherwise display error message “no change in capacity”, if cat_code is other than this.
+ Accept cat_code from user. Use route_header (routeid, cat_code, origin, destination, capacity)    (using case)
+
+18.Write a pl/sql block to store the details of flat in flat_details(flat type, no_of_rooms).
+ Accept the no_of rooms from the table. If the no_of_rooms > 5 then store flat_type as BIG, if no_of_rooms > 3 
+and less than 5 then store flat_type as SPACIOUS. If no_of_rooms >1 and less than or equal to 2 then flat type is STUDIO.
+ Store the flat type by Case structure.
+
+19. A clerk in an organization wants to make the entries of the details products in the database. 
+  Help him by writing a procedure that will allow him to insert the values in the products database by just executing
+ the procedure.                                                                                                                                      
+
+20 Create a table products(prodid,prodname,price). Insert 2 records into the same table. 
+Save the contents. Delete the records which is recently inserted. Rollback the transaction. 
+Save the changes done till this point by the name as T1.          
+
+            
+21 MindTree Software Company has decided to place the employees who have done different certifications in
+ various areas like Testing, Project Management, DotNet Programming and Red Hat Linux Certifications. 
+The company maintains the information about employees in the table called emp_certifications 
+ which contains name of the employee(ename), his identification number(eno) , area of certification (certification_area)
+ and the department under which the employee is working (deptname). Write a PL/SQL block with CASE…WHEN statements with 
+variable, that prints the area of  certification and the department name  where employee number and type of certification 
+is to be taken as an input by the user.  
+
+22 write a pl/sql block to display the employees whose empno is accepted from the user , is stored in 
+emp(empno,ename,job, hiredate). The employees who are currently giving their services to an organization for more
+ than 15 years; If such employees are presently working or have already worked then show their empno, ename,  job  along
+ with the message “Service given for 15 yrs” else raise an exception and print the message as  ”15 years not over”
+
+
+23.People’s Bank wants to implement a “Farmer of the Year Award” that should be given to the farmer who is the customer 
+of that bank with most number of taking crops in a year. As a reward, he/she gets a deposit of Rs. 5000 to their account.
+Customer table: custId, name, Balance
+Transaction: TransId, custId, TransDate, TransAmount
+Write a PL/SQL procedure that accepts the custId and balance & displays the updated amount in TransAmount which is
+ the reward amount to his account      
+
+24 Write a pl/sql block to find the qty_ordered < stock_in_hand when client places an order with supplier for some product.
+ If this condition fulfills then update supp_ord (ord_id, prodno,  qty_ordered, stock_in_hand, ord_fulfilled) 
+ and store the status as ‘y’ for ord_fulfilled otherwise it should be stored as ‘n’ . Use the tables supp_ord 
+ and product (prodno,prodname,rate)           
+
+
+25 Write a pl/sql block to accept students_details. Assuming that this table is already created and some records 
+are inserted. (studID,name , address, birth_date). School keeps the record of the students. 
+If the student is of 5 years old then only he is allowed to take admission in the school for 
+JrKG else the school doesn’t grant the admission. Find out how many students can take admission in the Jr.KG 
+nd show them along with their details in today’s scenario.          
+
+26.Employees of the testing department in the Perpetual Systems does testing of the software and result is taken 
+as test-id, test-name, date_of_testing, test_result. Execute the procedure to insert the values in 
+the table “test_specifications”.                                                                                       
+27.(D) Create the sequence to generate the values for test-id in the test_specifications(given in above part)
+ table and display the values.
+
+28. Write a pl/sql block to store the details of flat in flat_details(flat type, no_of_rooms). 
+Accept the no_of rooms from the table. If the no_of_rooms > 5 then store flat_type as BIG, if no_of_rooms > 3
+and less than 5 then store flat_type as SPACIOUS. If no_of_rooms >1 and less than or equal to 2 then flat type is STUDIO.
+ Store the flat type by Case structure. 
+

@@ -1,0 +1,23 @@
+declare
+r_id r_header.route_id%type;
+org r_header.origin%type;
+dest r_header.destination%type;
+cat_code number;
+capacity number;
+route_id number;
+
+begin
+select origin,destination into org,dest from r_header where route_id=&route_id;
+cat_code:=&cat_code;
+if cat_code='1' then
+update r_header set cat_code=1 where route_id=route_id;
+update r_header set capacity=25 where cat_code=1;
+elsif cat_code='2' then
+update r_header set cat_code=2 where route_id=route_id;
+update r_header set capacity=50 where cat_code=2;
+else
+dbms_output.put_line('no such capacity sorry man');
+	end if;
+end;
+ .
+/

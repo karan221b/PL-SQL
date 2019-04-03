@@ -1,0 +1,13 @@
+declare 
+p number;
+r number;
+n si.no_of_yrs%type:=&n;
+result1 number;
+begin
+select p_amt,no_of_yrs,rate into p,r,n from si  where no_of_yrs=n;
+result1:=(p*n*r)/100;
+dbms_output.put_line(result1);
+update si set result=result1 where no_of_yrs=n;
+end;
+.
+/

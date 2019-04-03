@@ -1,0 +1,353 @@
+Ques 8:
+Write a simple function which should display msg and should b called in PL/SQL block.
+
+Solution 8:
+Method 1(without parameters):
+ SQL> CREATE OR REPLACE FUNCTION f_disp
+  2  RETURN VARCHAR2 IS
+  3  msg varchar2(20);
+  4  BEGIN
+  5  msg:='Hello World!!!';
+  6  RETURN msg;
+  7  End f_disp;
+  8  /
+
+Method 2(With parameters):
+SQL> CREATE OR REPLACE FUNCTION f_disp(msg IN OUT VARCHAR2)
+  2  RETURN VARCHAR2 IS
+  3  BEGIN
+  4  msg:='Hello World!!!';
+  5  RETURN msg;
+  6  End f_disp;
+  7  /
+
+SQL> declare
+  2  m varchar2(20);
+  3  begin
+  4  m:=f_disp;
+  5  dbms_output.put_line(m);
+  6  end;
+  7  /
+
+Output 8:
+Function created.
+
+Hello World!!!
+
+PL/SQL procedure successfully completed.
+
+------------------------------------------------------------------------------
+Ques 9:
+Write a simple function which should display a number and should be called in PL/SQL block.
+Solution 9:
+SQL> CREATE OR REPLACE FUNCTION f_num(no IN OUT NUMBER)
+  2  RETURN NUMBER IS
+  3  BEGIN
+  4  RETURN no;
+  5  End f_num;
+  6  /
+
+SQL> declare
+  2  m number(7,2);
+  3  begin
+  4  m:=&m;
+  5  m:=f_num(m);
+  6  dbms_output.put_line('The no is:' || m);
+  7  end;
+  8  /
+
+Output 9:
+Function created.
+
+Enter value for m: 7
+old   4: m:=&m;
+new   4: m:=7;
+The no is:7
+
+PL/SQL procedure successfully completed.
+
+----------------------------------------------------------------
+Ques 10:
+Write a simple function which should display a sum of two numbers and should be called in PL/SQL block.
+
+Solution 10:
+SQL> CREATE OR REPLACE FUNCTION f_sum(no1 IN OUT NUMBER,no2 IN OUT NUMBER)
+  2  RETURN NUMBER IS
+  3  BEGIN
+  4  RETURN no1+no2;
+  5  END f_sum;
+  6  /
+
+SQL> declare
+  2  m1 number(5);
+  3  m2 number(5);
+  4  s number(5);
+  5  begin
+  6  m1:=&m1;
+  7  m2:=&m2;
+  8  s:=f_sum(m1,m2);
+  9  dbms_output.put_line('The sum is:' || s);
+ 10  end;
+ 11  /
+Output 10:
+Function created.
+
+Enter value for m1: 5
+old   6: m1:=&m1;
+new   6: m1:=5;
+Enter value for m2: 3
+old   7: m2:=&m2;
+new   7: m2:=3;
+The sum is:8
+
+PL/SQL procedure successfully completed.
+---------------------------------------------------------------------
+Ques 11:
+Write a func that will accept fleet_id as i/p and return day as o/p.Use fleet_header as follows.
+Fleet_id		Day		Route_id
+    1		      1-Mar-10		    10
+    2		     30-Apr-10		    20
+   3		      5-Dec-09		    30
+   4		     10-Nov-05		    40
+Solution 11:
+SQL> CREATE OR REPLACE FUNCTION f_fleet(id IN OUT NUMBER)
+  2  RETURN DATE AS
+  3  d date;
+  4  BEGIN
+  5  SELECT day INTO d FROM fleet_header where fleet_id = id; 
+  6  RETURN d;
+  7  END f_fleet;
+  8  /
+
+SQL> declare
+  2  d date;
+  3  i number(2);
+  4  begin
+  5  i:=&i;
+  6  d:=f_fleet(i);
+  7  dbms_output.put_line('Day is:' || d);
+  8  end;
+  9  /
+
+Output 11:
+Function created.
+Enter value for i: 2
+old   5: i:=&i;
+new   5: i:=2;
+Day is:30-APR-10
+
+PL/SQL procedure successfully completed.
+------------------------------------------------------------
+Ques 12:
+Write a simple function which should display whether number is odd or even and should be called in PL/SQL block.
+
+Solution 12:
+SQL> CREATE OR REPLACE FUNCTION f_oddeven(no IN OUT NUMBER)
+  2  RETURN VARCHAR2 IS
+  3  msg VARCHAR2(20);
+  4  BEGIN
+  5  if mod(no,2) = 0 then
+  6  msg:='Num is Even';
+  7  else
+  8  msg:='Num is Odd';
+  9  end if;
+ 10  RETURN msg;
+ 11  END f_oddeven;
+ 12  /
+
+SQL> declare
+  2  n number(5);
+  3  m varchar2(20);
+  4  begin
+  5  n:=&n;
+  6  m:=f_oddeven(n);
+  7  dbms_output.put_line( m );
+  8  end;
+  9  /
+
+Output 12:
+Function created.
+
+Enter value for n: 5
+old   5: n:=&n;
+new   5: n:=5;
+Num is Odd
+
+PL/SQL procedure successfully completed.
+
+------------------------------------------------------------------------
+Ques 13:
+Write a PL/Sql block which calls a function which is used to count the no of employees in Employees table.
+Solution 13:
+SQL> CREATE OR REPLACE FUNCTION f_empcnt
+  2  RETURN NUMBER AS
+  3  cnt NUMBER(5);
+  4  BEGIN 
+  5  select count(*) into cnt from Employees;
+  6  RETURN cnt;
+  7  END f_empcnt;
+  8  /
+
+SQL> declare
+  2  cnt number(5);
+  3  begin
+  4  cnt:=f_empcnt;
+  5  dbms_output.put_line('The count is:' || cnt);
+  6  end;
+  7  /
+
+Output 13:
+Function created.
+
+The count is:2
+
+PL/SQL procedure successfully completed.
+
+-------------------------------------------------------------------------------
+Ques 14:
+Write a PL/SQL block which calls a function to update the salary of the employee by 1000.
+Solution 14:
+SQL> CREATE OR REPLACE FUNCTION f_updtemp(a IN OUT NUMBER)
+  2  RETURN NUMBER AS
+  3  i NUMBER(5);
+  4  BEGIN
+  5  update Employees set empsal= (empsal+1000) where empid=a;
+  6  select empsal into i from Employees where empid = a;
+  7  RETURN i;
+  8  END f_updtemp;
+  9  /
+
+
+
+
+SQL> declare
+  2  sal NUMBER(7,2);
+  3  id NUMBER(4);
+  4  begin
+  5  id:=&id;
+  6  sal:=f_updtemp(id);
+  7  dbms_output.put_line('Updated salary is:'||sal);
+  8  end;
+  9  /
+
+Output 14:
+Function created.
+
+Enter value for id: 4
+old   5: id:=&id;
+new   5: id:=4;
+Updated salary is:2000
+
+PL/SQL procedure successfully completed.
+------------------------------------------------------------------------------
+Ques 15:
+Write a PL/SQL block which calls a recursive function to calculate the factorial of a number.
+Solution 15:
+SQL> CREATE OR REPLACE FUNCTION f_fact(no NUMBER)
+  2  RETURN NUMBER IS
+  3  f NUMBER(5);
+  4  BEGIN
+  5  if (no=1) then
+  6  f:=1;
+  7  else
+  8  f:=no * f_fact(no-1);
+  9  END if;
+ 10  RETURN f;
+ 11  END f_fact;
+ 12  /
+
+
+SQL> declare
+  2  n number(5);
+  3  fct number(5);
+  4  begin
+  5  n:=&n;
+  6  fct:=f_fact(n);
+  7  dbms_output.put_line('factorial is:' || fct );
+  8  end;
+  9  /
+
+SET SERVEROUTPUT ON is a command used to access results from Oracle Server. 
+A PL/SQL program is terminated by a “ / “. DBMS_OUTPUT is a package and PUT_LINE is a procedure in it.
+-------------------------------------------------------------
+Functions
+1)
+create or replace function three
+(a number :=0 , b number :=0 , c number:=1) return number is
+begin
+    return(a-b)/c;
+end;
+.
+/
+
+SQL> begin
+  2     dbms_output.put_line(three(3,4,5));
+  3  end;
+  4  .
+SQL> /
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on
+SQL> /
+-.2
+
+PL/SQL procedure successfully completed.
+--------------------------------------------------------
+SQL> varible output number;
+
+SQL> call three() into :output;
+
+Call completed.
+
+SQL> select :output from dual;
+
+   :OUTPUT
+----------
+         0
+
+SQL> call three(3,4,5) into :output;
+
+Call completed.
+
+SQL> select :output from dual;
+
+   :OUTPUT
+----------
+       -.2
+
+
+
+SQL>
+--------------------------------------------------------------------------------------------------------------------
+
+2) deterministic function always works in the same way with any inputs. it also guarantees that the fn doesnt read / write data from external sources,such as other
+stored pgms or db tables
+
+create or replace function pv(future_value number,periods number,interest number) return number deterministic is
+begin
+    return future_value / ((1+interest/100)**periods);
+end;
+.
+/
+
+SQL> variable result number
+SQL> call pv(10000,5,6) into :result;
+
+Call completed.
+
+SQL> select :result as money_today from dual;
+
+MONEY_TODAY
+-----------
+ 7472.58173
+
+-------------------------------------------------------------------------------------------------------------
+parallel_enable has the benefit of ensuring the format masks are always maintained in a single fn
+
+3) create or replace function merge (lname varchar2(10),fname varchar2(10),mname varchar2(10)) return varchar2 parallel_enable is
+begin
+    return lname || ' , ' || fname || ' , ' || mname ;
+end;
+.
+7:13 AM 10/8/2017 0/

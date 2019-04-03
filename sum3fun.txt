@@ -1,0 +1,19 @@
+create or replace function sumofnum(x in number,y in number,z in number)
+return number is
+a number;
+begin
+a:=x+y+z;
+return a;
+end;
+.
+/
+
+declare 
+a number:=&a;
+b number:=&b;
+c number:=&c;
+begin
+dbms_output.put_line('Sum of three Number is:'||sumofnum(a,b,c));
+end;
+.
+/

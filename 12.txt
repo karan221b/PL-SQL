@@ -1,0 +1,21 @@
+declare
+	enm varchar2(20);
+	no number:=&no;
+	earea varchar2(20);
+	edept varchar2(20);
+	hire_date date;
+	date_diff number;
+begin
+select ename,certification_area,deptname,hiredate into enm,earea,edept,hire_date from emp_certification where eno=no;
+date_diff:=(months_between(sysdate,hire_date)/12);
+if (date_diff>=15) then
+	dbms_output.put_line('emo id:'||no||' emp name:'||enm||' job'||edept);
+	dbms_output.put_line('service year:'||date_diff);
+	dbms_output.put_line('service given for 15 yrs');
+else
+	dbms_output.put_line('service year:'||date_diff);
+	dbms_output.put_line('service given not over');
+end if;
+end;
+.
+/

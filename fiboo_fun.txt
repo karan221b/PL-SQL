@@ -1,0 +1,27 @@
+create or replace function fib(e in out number)
+return number is
+a number:=0;
+b number:=1;
+temp number;
+begin	
+        --dbms_output.put_line('fib series'||chr(10)||'0'||chr(10)||'1');
+	while(e>2) 
+	loop
+		temp:=a+b;
+		a:=b;
+		b:=temp;
+		dbms_output.put_line(temp);
+		e:=e-1;
+	end loop;
+	return NULL;
+end;
+.
+/
+
+declare
+	a number:=&a;
+begin
+	dbms_output.put_line(fib(a));
+end;
+.
+/	

@@ -1,0 +1,17 @@
+create or replace procedure pro(amount in out number,year in out number) is
+a number:=amount;
+b number:=year;
+begin
+ insert into si values(a,b,null,null,null);
+end;
+.
+/
+
+declare
+	a number:=&amount;
+	b number:=&year;
+begin
+	pro(a,b);
+end;
+.
+/

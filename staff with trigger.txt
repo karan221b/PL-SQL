@@ -1,0 +1,24 @@
+create or replace trigger audit_trail after
+	update or delete on staff for each row
+declare
+	oprn varchar2(8);
+	staffis number(2);
+	staffname varchar2(14);
+	
+begin
+	if updating then
+		oprn:='update';
+	end if;
+
+	if deleting then
+		oprn:='delete';
+	end if;
+
+	staffis:=:new.staffis;
+	staffname:=:new.staffname;
+	
+insert into newdept values(staffis,staffname,oprn,sysdate);
+
+end;
+.
+/

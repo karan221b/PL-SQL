@@ -1,0 +1,17 @@
+declare  
+a number := &a;
+b number := &b;
+c number := &c;
+d number := &d;
+e number := &e;
+total number:=0;
+average number:=0;
+begin
+dbms_output.put_line('the value of a,b,c,d,e' || a || b || c || d || e );
+total := a+b+c+d+e;
+dbms_output.put_line('the value of total is '||total);
+average := total/5;
+dbms_output.put_line('average is '||average);
+end;
+.
+/

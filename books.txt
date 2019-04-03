@@ -1,0 +1,18 @@
+declare
+	bk_price books.bk_price%type;
+	bkid books.bkid%type;
+	gst number:=0;
+	total_prices number:=0;
+
+begin
+	select bk_price into bk_price from book where bkid=&bkid;
+	gst:=bk_price*(3/100);
+	total_prices:=bk_price + gst;
+	
+	update book set total_price=total_price where bkid=bkid;
+	dbms_output.put_line('the total price is:'||total_price);
+		
+end;
+.
+/
+	

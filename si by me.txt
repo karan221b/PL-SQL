@@ -1,0 +1,25 @@
+declare
+	p_amt si.amt%type;
+	p_rate si.rate%type;
+	p_noy si.noy%type;
+	result1 number:=0;
+begin
+	select amt,rate,noy into p_amt,p_rate,p_noy from si where noy=&p_noy;
+	result1:=(p_amt*p_rate*p_noy)/100;
+	dbms_output.put_line(result1);
+	insert into si values(
+end;
+.
+/
+
+declare 
+a number:=&a;
+b number:=&b;
+
+begin 
+select amt,rate into a,b from si where rate=&b;
+dbms_output.put_line('hello');
+insert into si values(a,b,null,null);
+end;
+.
+/
